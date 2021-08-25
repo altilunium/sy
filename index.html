@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href="logo.png" type="image/x-icon">
+	<title>sy</title>
+</head>
+<style>
+#tw{
+
+	width: 90%;
+	resize: none;
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 42px;
+    padding: 10px;
+    font-family: sans-serif;
+}
+
+#me {
+	background-color: #1383a5;
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 0;
+    width: 100%;
+    padding: 7px;
+    text-align: center;
+    color: white;
+}
+#c {
+	background-color: #1383a5;
+    width: 54px;
+    text-align: center;
+    padding: 9px;
+    margin-top: 11px;
+    margin-left: 10px;
+    color: white;
+}
+
+.satutw{
+	padding: 4px;
+}
+
+#aye{
+	width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 18px;
+}
+
+</style>
+
+
+<body>
+<p id="me"></p>
+<div id="twt">
+<textarea  id="tw" maxlength="800" data-emojiable="true" class="pure-input-1 pure-u-23-24" rows="4" id="message" placeholder="What's happening?"></textarea>
+<div id="c" onclick="s()">Send</div>
+</div>
+
+<div id="aye"></div>
+
+
+</body>
+<script src="su.js"></script>
+<script >
+   var vid = "";	
+
+  // Initialize the agent at application startup.
+  const fpPromise = new Promise((resolve, reject) => {
+    const script = document.createElement('script')
+    script.onload = resolve
+    script.onerror = reject
+    script.async = true
+    script.src = 'fp.js'
+    document.head.appendChild(script)
+  })
+    .then(() => FingerprintJS.load())
+
+  // Get the visitor identifier when you need it.
+  fpPromise
+    .then(fp => fp.get())
+    .then(result => {
+      // This is the visitor identifier:
+      const visitorId = result.visitorId
+      console.log(visitorId)
+      vid = visitorId;
+      a = document.getElementById("me")
+      a.innerHTML = visitorId
+    })
+
+
+    function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
+  
+  var supabase = supabase.createClient("https://vvtmwxwxboyudlwmwsjl.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYyOTg0MzQ0NCwiZXhwIjoxOTQ1NDE5NDQ0fQ.paOAjdDgtoPn_u-OeFYIiVhNOp5Pxxh7lSN92G9OOWY")
+  ref()
+
+
+
+  async function s()   {
+  	var twit = document.getElementById("tw").value;
+  	if (twit.length > 0) {
+  		document.getElementById("tw").value = "";
+
+  	const { data, error } = await supabase
+  .from('tw')
+  .insert([
+    { uid: vid, tweet: twit }
+  ])
+
+  document.getElementById("me").innerHTML = "Terkirim!"
+  await sleep(1000);
+  document.getElementById("me").innerHTML = vid;
+  document.getElementById("aye").innerHTML = ""
+  ref()
+
+
+  }
+}
+
+async function ref() {
+	const { data, error } = await supabase
+  .from('tw')
+  .select()
+  .order('id',{ascending : 'true'})
+  .limit(100)
+
+
+
+
+  for (var i = data.length-1 ; i >= 0; i--) { 
+  	var thestring = "<div class='satutw'><b class='usernya'>"+data[i].uid+"</b><br>"+data[i].tweet+"</div>"
+  	document.getElementById("aye").innerHTML += thestring
+
+
+
+   }
+
+
+
+  
+
+}
+
+
+
+
+</script>
+</html>
