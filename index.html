@@ -28,6 +28,7 @@
     padding: 7px;
     text-align: center;
     color: white;
+    z-index: 2;
 }
 #c {
 	    background-color: #1383a5;
@@ -42,6 +43,7 @@
 
 .satutw{
 	padding: 4px;
+	    margin-left: 45px;
 }
 
 #aye{
@@ -60,6 +62,12 @@
 .usernya{
 	font-size: 10px;
 	color:grey;
+}
+
+.ava {
+	width: 40px;
+	position: absolute;
+    left: 20px;
 }
 </style>
 
@@ -146,7 +154,7 @@ async function ref() {
 
 
   for (var i = data.length-1 ; i >= 0; i--) { 
-  	var thestring = "<div class='satutw'><b class='usernya'>"+data[i].uid+"</b><br>"+data[i].tweet+"</div>"
+  	var thestring = "<div class='satutw'><img class='ava' src='https://robohash.org/"+data[i].uid+"?set=set4'> <b class='usernya'>"+data[i].id+"</b><br>"+data[i].tweet+"</div>"
   	document.getElementById("aye").innerHTML += thestring
 
 
