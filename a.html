@@ -8,6 +8,7 @@
 <body>
 		<h2>Submit a MAL character link</h2>
 		<input type="text" id="target" onkeypress="handle(event)">
+		<h2>Your hash is <div id="nya"></div></h2>
 	
 </body>
 
@@ -33,7 +34,7 @@ var vid = "";
       const visitorId = result.visitorId
       console.log(visitorId)
       vid = visitorId;
-      a = document.getElementById("me")
+      a = document.getElementById("nya")
       a.innerHTML = visitorId
     })
 
