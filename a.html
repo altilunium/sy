@@ -1,0 +1,71 @@
+<html>
+	<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="su.js"></script>
+	<script src="fp.js"></script>
+</head>
+
+<body>
+		<h2>Submit a MAL character link</h2>
+		<input type="text" id="target" onkeypress="handle(event)">
+	
+</body>
+
+<script>
+var vid = "";	
+
+  // Initialize the agent at application startup.
+  const fpPromise = new Promise((resolve, reject) => {
+    const script = document.createElement('script')
+    script.onload = resolve
+    script.onerror = reject
+    script.async = true
+    script.src = 'fp.js'
+    document.head.appendChild(script)
+  })
+    .then(() => FingerprintJS.load())
+
+  // Get the visitor identifier when you need it.
+  fpPromise
+    .then(fp => fp.get())
+    .then(result => {
+      // This is the visitor identifier:
+      const visitorId = result.visitorId
+      console.log(visitorId)
+      vid = visitorId;
+      a = document.getElementById("me")
+      a.innerHTML = visitorId
+    })
+
+
+async function s()   {
+  	var twit = document.getElementById("target").value;
+  	if (twit.length > 0) {
+  		document.getElementById("target").value = "";
+
+  	const { data, error } = await supabase
+  .from('tw')
+  .insert([
+    { uid: vid, tweet: twit }
+  ])
+  alert("Sent!");
+ 
+
+  }
+}
+
+
+
+function handle(e){
+	if (e.keyCode==13){
+		e.preventDefault();
+		s()
+		
+	}
+	
+}
+
+
+
+  var supabase = supabase.createClient("https://vvtmwxwxboyudlwmwsjl.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYyOTg0MzQ0NCwiZXhwIjoxOTQ1NDE5NDQ0fQ.paOAjdDgtoPn_u-OeFYIiVhNOp5Pxxh7lSN92G9OOWY")
+</script>
